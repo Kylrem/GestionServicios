@@ -143,5 +143,14 @@ public class ServicioSuscripcion {
 		ControladorServicioSuscripcion.establecerSus(suscrito);
 		
 	}
+	/**
+
+	Obtiene los inmuebles asociados a un servicio específico.
+	@param nombreServicio el nombre del servicio del cual se desean obtener los inmuebles.
+	*/
+	public void obtenerInmueblesPorServicio(String nombreServicio) {
+		ControladorServicioSuscripcion.mostrarInmueblesPorServicio(nombreServicio);
+		
+	}
 	
 }
