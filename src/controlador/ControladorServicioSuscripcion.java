@@ -45,5 +45,20 @@ public class ControladorServicioSuscripcion {
 		
 		
 	}
+	/**
+
+	Muestra los inmuebles asociados a un servicio específico.
+	@param in el nombre del servicio del cual se desean obtener los inmuebles.
+	*/
+	public static void mostrarInmueblesPorServicio(String in) {
+		ServiciosSuscripcionDAO bd = new ServiciosSuscripcionDAO();
+		
+		bd.obtenerInmueblesPorServicio(in);
+		
+		
+	}
+
+	
 	
 }
+
