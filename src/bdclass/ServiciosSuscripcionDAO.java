@@ -3,9 +3,11 @@ package bdclass;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.*;
 
 import javax.swing.JOptionPane;
 
+import controlador.ControladorServicioSuscripcion;
 import inmueble.Inmueble;
 import serviciosuscripcion.ServicioSuscripcion;
 /**
@@ -109,5 +111,42 @@ public class ServiciosSuscripcionDAO {
 		return servicios;
 		
 	}
+	/**
+
+	Obtiene los inmuebles asociados a un servicio específico.
+
+	@param nombreServicio el nombre del servicio del cual se desean obtener los inmuebles.
+
+	@return una lista de cadenas de texto con los nombres de los inmuebles asociados al servicio.
+	*/
+	public List<String> obtenerInmueblesPorServicio(String nombreServicio) {
+		List<String> nombreInmuebles = new ArrayList<>();
+		try{
+			
+			ConexionBD conBD = new ConexionBD();
+	        Connection con = conBD.getConnection();
+			
+			
+			PreparedStatement prestat = con.prepareStatement("SELECT DISTINCT i.Nombre FROM serviciosuscripcion su JOIN inmueble i ON su.IDInmueble = i.IDInmueble JOIN servicios s ON su.IDServicio = s.IDServicio WHERE s.NombreServicio = ? AND su.EnActivo = true");
+			
+			prestat.setString(1, nombreServicio);	
+			ResultSet res = prestat.executeQuery();
+			
+			while(res.next()) {
+				String nombreInmueble = res.getString("Nombre");
+				nombreInmuebles.add(nombreInmueble);
+
+			}
+
+		}catch(Exception e) {
+			JOptionPane.showMessageDialog(null, "Error al conectar");
+		}
+		return nombreInmuebles;
+		
+	}
 	
+    public static void main(String[] args) {
+    	ServiciosSuscripcionDAO c = new ServiciosSuscripcionDAO();
+        System.out.print(c.obtenerInmueblesPorServicio("Cortar el pasto"));
+    }
 }
